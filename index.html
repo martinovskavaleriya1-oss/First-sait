@@ -1,1 +1,327 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Притулок для тварин "Лапа до Серця"</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-amber-50/50 text-slate-800 min-h-screen flex flex-col">
 
+    <!-- Верхній банер притулку з контактними даними -->
+    <header class="bg-gradient-to-r from-amber-600 via-orange-500 to-amber-700 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
+            <div class="flex items-center gap-4">
+                <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
+                    <i class="fa-solid fa-paw text-3xl md:text-4xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-4xl font-bold tracking-tight">Притулок «Лапа до Серця»</h1>
+                    <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-1 text-amber-100 text-sm md:text-base">
+                        <p><i class="fa-solid fa-location-dot mr-1"></i> вул. Затишна, 14, м. Київ</p>
+                        <p class="hidden sm:inline">•</p>
+                        <p><i class="fa-solid fa-phone mr-1"></i> <a href="tel:+380441234567" class="hover:underline font-semibold">+38 (044) 123-45-67</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/25 flex flex-col items-center md:items-start">
+                <p class="text-sm md:text-base italic font-medium">«Забери тваринку — і вдома буде справжня любов!»</p>
+                <p class="text-xs text-amber-100 mt-1"><i class="fa-solid fa-envelope mr-1"></i> info@lapa-do-sertsya.ua</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Навігація / Вкладки -->
+    <nav class="sticky top-0 z-20 bg-white/90 backdrop-blur-md shadow-sm border-b border-amber-100">
+        <div class="max-w-7xl mx-auto px-4 flex justify-center overflow-x-auto py-3 gap-2 md:gap-4 no-scrollbar">
+            <button onclick="switchTab('dogs')" id="btn-dogs" class="tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-amber-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-dog"></i> Собаки
+            </button>
+            <button onclick="switchTab('cats')" id="btn-cats" class="tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-white text-slate-600 hover:bg-amber-100 hover:text-amber-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-cat"></i> Коти
+            </button>
+            <button onclick="switchTab('rabbits')" id="btn-rabbits" class="tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-white text-slate-600 hover:bg-amber-100 hover:text-amber-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-carrot"></i> Кролики
+            </button>
+            <button onclick="switchTab('fish')" id="btn-fish" class="tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-white text-slate-600 hover:bg-amber-100 hover:text-amber-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-fish"></i> Рибки
+            </button>
+            <button onclick="switchTab('guinea-pigs')" id="btn-guinea-pigs" class="tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-white text-slate-600 hover:bg-amber-100 hover:text-amber-800 flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-paw"></i> Морські свинки
+            </button>
+        </div>
+    </nav>
+
+    <!-- Головний контент -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+        <div class="mb-6 text-center">
+            <h2 id="section-title" class="text-2xl md:text-3xl font-bold text-slate-800">Наші друзі, які шукають дім</h2>
+            <p id="section-desc" class="text-slate-600 mt-1">Натисніть на будь-яку тваринку, щоб дізнатися її зворушливу історію.</p>
+        </div>
+
+        <!-- Контейнер для списку тварин -->
+        <div id="pets-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Динамічно заповнюється JavaScript -->
+        </div>
+    </main>
+
+    <!-- Модальне вікно для історії тварини -->
+    <div id="pet-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden p-4">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden transform transition-all scale-95 opacity-0 duration-300" id="modal-content">
+            <div class="relative h-64 bg-slate-200">
+                <img id="modal-img" src="" alt="Фото тварини" class="w-full h-full object-cover">
+                <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
+                    <h3 id="modal-name" class="text-2xl font-bold"></h3>
+                    <p id="modal-age" class="text-amber-200 text-sm font-medium"></p>
+                </div>
+            </div>
+            <div class="p-6">
+                <h4 class="text-sm uppercase tracking-wider text-amber-600 font-bold mb-2">Історія тваринки</h4>
+                <p id="modal-story" class="text-slate-600 leading-relaxed text-base mb-4"></p>
+                
+                <div class="bg-amber-50 border border-amber-200/60 rounded-2xl p-3 mb-4 text-sm text-amber-900">
+                    <p class="font-semibold mb-1"><i class="fa-solid fa-phone-volume text-amber-600 mr-1.5"></i> Контакти для усиновлення:</p>
+                    <p>Телефон: <a href="tel:+380441234567" class="font-bold underline">+38 (044) 123-45-67</a> або <a href="tel:+380671112233" class="font-bold underline">+38 (067) 111-22-33</a></p>
+                    <p class="text-xs text-amber-800/80 mt-0.5">Адреса притулку: м. Київ, вул. Затишна, 14 (щодня з 10:00 до 18:00)</p>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100 flex justify-end gap-3">
+                    <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-colors">Закрити</button>
+                    <button onclick="adoptModal()" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-medium shadow-lg shadow-amber-600/30 transition-colors">Забрати додому</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-slate-900 text-slate-400 py-10 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <h3 class="text-white font-bold text-lg mb-2 flex items-center justify-center md:justify-start gap-2">
+                    <i class="fa-solid fa-paw text-amber-500"></i> Притулок «Лапа до Серця»
+                </h3>
+                <p class="text-sm text-slate-400 leading-relaxed">Даруємо турботу та знаходимо родини для кожного чотирилапого друга. Працюємо для вас щодня без вихідних.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-2">Контактні дані</h4>
+                <p class="text-sm mb-1"><i class="fa-solid fa-location-dot text-amber-500 mr-2"></i> вул. Затишна, 14, м. Київ</p>
+                <p class="text-sm mb-1"><i class="fa-solid fa-phone text-amber-500 mr-2"></i> +38 (044) 123-45-67</p>
+                <p class="text-sm mb-1"><i class="fa-solid fa-phone text-amber-500 mr-2"></i> +38 (067) 111-22-33</p>
+                <p class="text-sm"><i class="fa-solid fa-envelope text-amber-500 mr-2"></i> info@lapa-do-sertsya.ua</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-2">Графік роботи</h4>
+                <p class="text-sm mb-1">Понеділок — П'ятниця: 09:00 — 19:00</p>
+                <p class="text-sm mb-3">Субота — Неділя: 10:00 — 18:00</p>
+                <div class="flex justify-center md:justify-start gap-4 text-xl text-amber-500">
+                    <a href="#" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-amber-400 transition-colors"><i class="fa-brands fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 text-center border-t border-slate-800 mt-8 pt-6">
+            <p class="text-xs text-slate-500">&copy; 2026 Притулок «Лапа до Серця». Усі права захищені. Зроблено з любов'ю до тварин.</p>
+        </div>
+    </footer>
+
+    <!-- Логіка JavaScript -->
+    <script>
+        // База даних тварин для кожної категорії з суворою відповідністю видів та правильними фото
+        const petsData = {
+            dogs: [
+                { id: 'd1', name: 'Рекс', age: '2 роки', img: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&auto=format&fit=crop&q=80', story: 'Рекса знайшли на автостанції, де він вірно чекав господаря цілий тиждень. Це дуже розумний, енергійний та відданий пес, який знає базові команди і чудово ладнає з дітьми.' },
+                { id: 'd2', name: 'Бетті', age: '1 рік', img: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=600&auto=format&fit=crop&q=80', story: 'Бетті — маленька грайлива дівчинка, яка потрапила до притулку разом із братиками. Вона неймовірно лагідна, любить сидіти на ручках та шукає активну родину.' },
+                { id: 'd3', name: 'Тобі', age: '4 роки', img: 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=600&auto=format&fit=crop&q=80', story: 'Тобі — спокійний і мудрий пес з добрими очима. Він чудово підійде для старших людей або для життя в затишному заміському будинку.' },
+                { id: 'd4', name: 'Джессі', age: '3 роки', img: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=600&auto=format&fit=crop&q=80', story: 'Джессі дуже товариська і любить довгі прогулянки. Вона обожнює гратися з м\'ячиком і стане найкращим компаньйоном для пробіжок.' },
+                { id: 'd5', name: 'Чарлі', age: '5 місяців', img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&auto=format&fit=crop&q=80', story: 'Чарлі — мале цуценя, яке ще тільки пізнає світ. Він надзвичайно допитливий, веселий і готовий до навчання у люблячій родині.' },
+                { id: 'd6', name: 'Мотя', age: '6 років', img: 'https://images.unsplash.com/photo-1591768793473-39579f04e4c9?w=600&auto=format&fit=crop&q=80', story: 'Мотя — досвідчена, лагідна та врівноважена собака. Вона вже не шукає зайвої метушні, а мріє про теплий килимок біля каміна та турботливих господарів.' },
+                { id: 'd7', name: 'Оскар', age: '2.5 роки', img: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&auto=format&fit=crop&q=80', story: 'Оскар надзвичайно комунікабельний пес, який знаходить спільну мову з усіма мешканцями притулку. Любить ласощі та довгі лісові прогулянки.' }
+            ],
+            cats: [
+                { id: 'c1', name: 'Мурчик', age: '1 рік', img: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80', story: 'Мурчик — пухнастий рудий красень, який любить голосно мурчати, коли його гладять. Врятований з підвалу житлового будинку, він готовий подарувати тепло вашому дому.' },
+                { id: 'c2', name: 'Буся', age: '2 роки', img: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&auto=format&fit=crop&q=80', story: 'Буся має унікальне димчасте забарвлення та дуже виразні зелені очі. Вона спокійна, охайна та обожнює спостерігати за пташками з підвіконня.' },
+                { id: 'c3', name: 'Сніжок', age: '8 місяців', img: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=600&auto=format&fit=crop&q=80', story: 'Сніжок — білосніжне кошеня з веселою вдачею. Дуже любить гонитви за лазерною указкою та ніжно засинає на колінах увечері.' },
+                { id: 'c4', name: 'Аліса', age: '3 роки', img: 'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=600&auto=format&fit=crop&q=80', story: 'Аліса — справжня кішка-аристократка. Вона дещо сором\'язлива при першому знайомстві, але згодом стає найвідданішим другом у світі.' },
+                { id: 'c5', name: 'Лакі', age: '4 роки', img: 'https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&auto=format&fit=crop&q=80', story: 'Лакі виправдовує своє ім\'я («щасливчик»), адже дивом вижив на вулиці. Тепер він шукає надійний дім, де його більше ніколи не зрадять.' },
+                { id: 'c6', name: 'Соня', age: '1.5 роки', img: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=600&auto=format&fit=crop&q=80', story: 'Соня найбільше на світі любить дві речі: смачно поїсти та довго спати на м\'якому дивані. Ідеальна кішка для гармонії у квартирі.' },
+                { id: 'c7', name: 'Маркіз', age: '3 роки', img: 'https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?w=600&auto=format&fit=crop&q=80', story: 'Маркіз — чорно-білий джентльмен з неймовірно м\'якою шерстю. Він дуже любить ласку і завжди зустрічає гостей тихим муркотінням.' }
+            ],
+            rabbits: [
+                { id: 'r1', name: 'Пушистик', age: '1 рік', img: 'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=600&auto=format&fit=crop&q=80', story: 'Пушистик — дуже ручний кролик декоративної породи. Обожнює свіжу моркву, петрушку і коли йому чублять вушка.' },
+                { id: 'r2', name: 'Кекс', age: '7 місяців', img: 'https://images.unsplash.com/photo-1535268647177-20dbde0c4c36?w=600&auto=format&fit=crop&q=80', story: 'Кекс — неймовірно жвавий і кумедний малюк. Він швидко стрибає по кімнаті та дуже любить увагу.' },
+                { id: 'r3', name: 'Бусинка', age: '2 роки', img: 'https://images.unsplash.com/photo-1534947936744-8452427a1e12?w=600&auto=format&fit=crop&q=80', story: 'Бусинка — спокійна і лагідна кроличка. Вона привчана до лоточка і спокійно реагує на інші домашні тварини.' },
+                { id: 'r4', name: 'Шалун', age: '1.5 роки', img: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&auto=format&fit=crop&q=80', story: 'Шалун отримав своє ім\'я завдяки допитливому характеру: він завжди досліджує нові куточки та любить паперові коробочки.' },
+                { id: 'r5', name: 'Ляля', age: '1 рік', img: 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=600&auto=format&fit=crop&q=80', story: 'Ляля — ніжна кроличка з унікальною шерсткою. Шукає дбайливих господарів без маленьких дітей.' }
+            ],
+            fish: [
+                { id: 'f1', name: 'Золотий Оскар', age: '1 рік', img: 'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=600&auto=format&fit=crop&q=80', story: 'Оскар — яскрава золота рибка, яка заворожує своєю плавною ходою в акваріумі. Вона стане чудовою прикрасою вашого інтер\'єру.' },
+                { id: 'f2', name: 'Неончики (зграйка)', age: '6 місяців', img: 'https://images.unsplash.com/photo-1535591273668-578e3118a84f?w=600&auto=format&fit=crop&q=80', story: 'Ця весела компанія неонових рибок любить плавати разом у гущі зелених водоростей. Додадуть яскравих фарб вашому дню.' },
+                { id: 'f3', name: 'Півник Фред', age: '1 рік', img: 'https://images.unsplash.com/photo-1524704796757-5a7096784858?w=600&auto=format&fit=crop&q=80', story: 'Фред — гордий самець бійцівської рибки з розкішними вуалевими плавцями. Має спокійний характер, живе окремо в затишному акваріумі.' },
+                { id: 'f4', name: 'Сомик Анті', age: '2 роки', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&auto=format&fit=crop&q=80', story: 'Анті — працелюбний сомик-чистильник, який відповідально стежить за чистотою дна акваріума та допомагає іншим рибкам.' },
+                { id: 'f5', name: 'Гуппі Райдужні', age: '8 місяців', img: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&auto=format&fit=crop&q=80', story: 'Активна група рибок гуппі з різнокольоровими хвостиками. Вони дуже невибагливі в догляді і за ними цікаво спостерігати всією родиною.' },
+                { id: 'f6', name: 'Скалярія Блакитна', age: '1.5 роки', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80', story: 'Витончена рибка незвичайної форми, яка плавно ковзає серед рослин і створює атмосферу справжнього підводного спокою.' }
+            ],
+            'guinea-pigs': [
+                { id: 'g1', name: 'Нюша', age: '1 рік', img: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=600&auto=format&fit=crop&q=80', story: 'Нюша — кумедна морська свинка з м\'якенькою шерсткою. Вона вміє дуже мило свистіти, коли чує звук відкривання холодильника!' },
+                { id: 'g2', name: 'Тимка', age: '1.5 роки', img: 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=600&auto=format&fit=crop&q=80', story: 'Тимка — пухнастий хлопець морської свинки. Має чудове забарвлення, дуже ручний і спокійно реагує на ласку.' },
+                { id: 'g3', name: 'Фекла', age: '8 місяців', img: 'https://images.unsplash.com/photo-1535268647177-20dbde0c4c36?w=600&auto=format&fit=crop&q=80', story: 'Фекла дуже активна та цікава дівчинка. Любить ховатися в тунелях з сіна і ласувати соковитими яблучками.' },
+                { id: 'g4', name: 'Барсик', age: '2 роки', img: 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=600&auto=format&fit=crop&q=80', story: 'Барсик — важливий і спокійний самець морської свинки. Він дуже товариський та з радістю йде на ручки.' },
+                { id: 'g5', name: 'Мішель', age: '1 рік', img: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=600&auto=format&fit=crop&q=80', story: 'Маленька охайная свиночка Мішель з перших секунд підкорює своїм добрим характером. Її приємно тримати на руках під час відпочинку.' },
+                { id: 'g6', name: 'Плюш', age: '1 рік', img: 'https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=600&auto=format&fit=crop&q=80', story: 'Плюш має м\'якеньку шерстку та дуже допитливий характер. Завжди вітає господарів тихим радісним сопінням.' }
+            ]
+        };
+
+        // Поточна відкрита вкладка
+        let currentTab = 'dogs';
+
+        // Функція перемикання вкладок
+        function switchTab(tabKey) {
+            currentTab = tabKey;
+            
+            // Оновлення активних стилів кнопок
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-white text-slate-600 hover:bg-amber-100 hover:text-amber-800 flex items-center gap-2 whitespace-nowrap";
+            });
+            const activeBtn = document.getElementById(`btn-${tabKey}`);
+            if(activeBtn) {
+                activeBtn.className = "tab-btn px-5 py-2.5 rounded-full font-semibold transition-all duration-300 bg-amber-600 text-white shadow-md flex items-center gap-2 whitespace-nowrap";
+            }
+
+            // Оновлення заголовків та рендер списку
+            updateSectionHeader(tabKey);
+            renderPets(tabKey);
+        }
+
+        function updateSectionHeader(tabKey) {
+            const titles = {
+                dogs: "Вірні собаки у пошуках дому",
+                cats: "Лагідні котики чекають на вас",
+                rabbits: "Пухнасті кролики",
+                fish: "Красиві акваріумні рибки",
+                'guinea-pigs': "Милі морські свинки"
+            };
+            document.getElementById('section-title').innerText = titles[tabKey];
+        }
+
+        // Рендеринг карток тварин
+        function renderPets(tabKey) {
+            const container = document.getElementById('pets-container');
+            const items = petsData[tabKey] || [];
+            
+            container.innerHTML = '';
+
+            items.forEach(pet => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer border border-amber-100 transform hover:-translate-y-1";
+                card.onclick = () => openModal(pet);
+                
+                card.innerHTML = `
+                    <div class="relative h-56 overflow-hidden bg-slate-100">
+                        <img src="${pet.img}" alt="${pet.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" onerror="this.src='https://placehold.co/600x400/f59e0b/ffffff?text=Тваринка'">
+                        <span class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-amber-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                            ${pet.age}
+                        </span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-1">${pet.name}</h3>
+                            <p class="text-slate-500 text-sm line-clamp-2">${pet.story}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-amber-600 font-medium text-sm">
+                            <span>Читати історію</span>
+                            <i class="fa-solid fa-arrow-right-long"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Відкриття модального вікна
+        function openModal(pet) {
+            document.getElementById('modal-img').src = pet.img;
+            document.getElementById('modal-name').innerText = pet.name;
+            document.getElementById('modal-age').innerText = `Вік: ${pet.age}`;
+            document.getElementById('modal-story').innerText = pet.story;
+
+            const modal = document.getElementById('pet-modal');
+            const content = document.getElementById('modal-content');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Закриття модального вікна
+        function closeModal() {
+            const modal = document.getElementById('pet-modal');
+            const content = document.getElementById('modal-content');
+            
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Кнопка "Забрати додому" у модальному вікні
+        function adoptModal() {
+            closeModal();
+            showNotification("Дякуємо за ваше велике серце! Зателефонуйте нам за номером +38 (044) 123-45-67 або приходьте за адресою: вул. Затишна, 14, м. Київ, щоб познайомитися з малюком.");
+        }
+
+        // Кастомне сповіщення (заміна alert)
+        function showNotification(message) {
+            const existing = document.getElementById('custom-notification');
+            if (existing) existing.remove();
+
+            const notif = document.createElement('div');
+            notif.id = 'custom-notification';
+            notif.className = "fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-amber-500/30 max-w-md transform translate-y-10 opacity-0 transition-all duration-300 flex items-start gap-3";
+            notif.innerHTML = `
+                <div class="bg-amber-500 text-slate-900 p-2 rounded-xl mt-0.5">
+                    <i class="fa-solid fa-heart text-lg"></i>
+                </div>
+                <div class="flex-grow">
+                    <h5 class="font-bold text-amber-400 mb-1">Запит на усиновлення</h5>
+                    <p class="text-sm text-slate-300 leading-relaxed">${message}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white ml-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                if (notif.parentElement) {
+                    notif.classList.add('translate-y-10', 'opacity-0');
+                    setTimeout(() => notif.remove(), 300);
+                }
+            }, 8000);
+        }
+
+        // Ініціалізація при завантаженні сторінки
+        window.onload = function() {
+            renderPets('dogs');
+        }
+    </script>
+</body>
+</html>
